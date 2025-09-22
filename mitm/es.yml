@@ -1,0 +1,85 @@
+services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.3
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-cluster
+      - discovery.seed_hosts=es02,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - network.host=0.0.0.0
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks: [elk]
+
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.3
+    container_name: es02
+    environment:
+      - node.name=es02
+      - cluster.name=es-cluster
+      - discovery.seed_hosts=es01,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - network.host=0.0.0.0
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata2:/usr/share/elasticsearch/data
+    networks: [elk]
+
+  es03:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.3
+    container_name: es03
+    environment:
+      - node.name=es03
+      - cluster.name=es-cluster
+      - discovery.seed_hosts=es01,es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - network.host=0.0.0.0
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata3:/usr/share/elasticsearch/data
+    networks: [elk]
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.14.3
+    container_name: kibana
+    depends_on:
+      - es01
+    environment:
+      - ELASTICSEARCH_HOSTS=["http://es01:9200","http://es02:9200","http://es03:9200"]
+      - XPACK_SECURITY_ENABLED=false
+      - TELEMETRY_ENABLED=false
+    ports:
+      - 5601:5601
+    networks: [elk]
+
+volumes:
+  esdata1:
+  esdata2:
+  esdata3:
+
+networks:
+  elk:
+    driver: bridge
