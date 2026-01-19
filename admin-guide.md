@@ -1,6 +1,14 @@
 # 管理员指南
 
-## 邀请用户
+## 确定账号的管理体系
+1. 启用EMU，采用Enterprise + Team的管理方式
+2. 不启用EMU，但是采用Enterprise + Team的方式
+3. 不启用EMU，采用free org的方式
+
+## 同步用户（账户方案1）
+1. Azure Entra ID 和本地SSO同步，然后再配置Azure Entra ID和GHEC账号体系打通。
+
+## 邀请用户（账户方案2、3）
 1. 收集用户的邮箱地址。
 2. 获得管理员的个人访问令牌（PAT）。需要指定PAT有足够的权限。需要admin:org 和 manage_billing:copilot 权限。
 3. 使用gh-org-invitation.html工具邀请用户。

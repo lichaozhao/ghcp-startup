@@ -11,14 +11,15 @@ import functools
 
 # 初始化Elasticsearch客户端
 
-ELASTICSEARCH_URL = "http://172.18.0.1:9200/"
+ELASTICSEARCH_URL = "https://172.18.0.1:9200/"
 #ELASTICSEARCH_URL = "http://es-test-es-http-ext:9200/"
 ELASTICSEARCH_USERNAME = "xxx"
 ELASTICSEARCH_PASSWORD = "xxx"
 
-es = Elasticsearch(ELASTICSEARCH_URL
+es = Elasticsearch(
+    ELASTICSEARCH_URL,
     # [ELASTICSEARCH_URL],
-    # use_ssl=False,
+    use_ssl=False,
     # verify_certs=False,
     # http_auth=(ELASTICSEARCH_USERNAME, ELASTICSEARCH_PASSWORD),
 )
