@@ -104,7 +104,7 @@ https://docs.github.com/en/enterprise-cloud@latest/admin/managing-iam/understand
 
 > setup user 用于**配置认证与预配**；后续建议仅用于：
 > - SCIM 预配用的 PAT（Personal Access Token）
-> - IdP 故障时使用 SAML recovery codes 恢复企业访问
+> - IdP 故障时使用 SSO recovery codes 恢复企业访问
 
 1. 从 GitHub 发来的邀请邮件中，为 setup user 设置密码。
 2. **使用隐身/无痕窗口**完成初始化（GitHub 文档建议）。
